@@ -1,0 +1,50 @@
+package com.suman.www.controller;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.suman.www.model.Stock;
+import com.suman.www.service.StockService;
+
+@RestController
+
+@CrossOrigin(origins = "http://localhost:5173/") 
+public class StockController {
+
+    @Autowired
+    private StockService stockService;
+
+    // Add a new stock
+    @PostMapping("/api/stock")
+    public Stock addStock(@RequestBody Stock stock) {
+        return stockService.addStock(stock);
+    }
+
+    // Get all stocks
+    @GetMapping("/api/stock")
+    public List<Stock> getAllStocks() {
+        return stockService.getAllStocks();
+    }
+
+    // Update stock details
+    @PutMapping("/{id}")
+    public Stock updateStock(@PathVariable Long id, @RequestBody Stock stockDetails) {
+        return stockService.updateStock(id, stockDetails);
+    }
+
+    // Delete a stock
+    @DeleteMapping("/{id}")
+    public String deleteStock(@PathVariable Long id) {
+        stockService.deleteStock(id);
+        return "Stock deleted successfully!";
+    }
+}
+
